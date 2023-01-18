@@ -4,8 +4,10 @@ bdir=./
 
 all: fab/fab dev
 
-dev: testpy
+dev: testpy2
 
+testpy2:
+	python3 test2.py
 testpy:
 	python3 test.py
 	python3 errtest.py

@@ -19,9 +19,18 @@ if ('--keep' == keep):
 
 support=f'--support={bdir}/support.js'
 
-print (f'spec={spec} bdir={bdir} keep={keep} pid={pid} fname={fname} support={support}')
+spec="""‛«name» («params») {«block»}’
+‛
+# «name»
+’"""
 
-p = subprocess.run ([f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab',f'<{spec}', f'>{fname}.ohm'],capture_output=False,universal_newlines=True)
+
+cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab']
+p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
+generatedOhmPart1 = p.stdout
+generatedOhm = generatedOhmPart1
+print ('generatedOhm')
+print (generatedOhm)
 
 # ${bdir}/fab/fab - Bred ${bdir}/bred.ohm ${bdir}/bredohm2.fab           <${spec} >>${fname}.ohm
 # ${bdir}/fab/fab - Bred ${bdir}/bred.ohm ${bdir}/bredohm3.fab           <${spec} >>${fname}.ohm
