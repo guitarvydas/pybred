@@ -1,0 +1,94 @@
+Bred {
+  main [spaces1 firstPattern spaces2 secondPattern spaces3] = ‛
+NestingGrammar {
+
+  topLevel = item+
+  item =
+    | whitespace+ -- ws
+    | atom -- atom
+    | pattern   -- pattern
+    | bracketed -- bracketed
+    | other -- other
+
+  atom =
+    | sscomment
+    | slashstarcomment
+    | sqstring
+    | dqstring
+    | bqstring
+    | verbatim
+
+  other = (name | (~whitespace ~atom ~pattern ~bracket any))
+  
+ 
+  bracket =
+    | "(" | ")" | "{" | "}" | "[" | "]" | lt | gt
+    | "/*" | "*/"
+    |  "❲" |  "❳" |  "\«" | "\»" | "⟨" |  "⟩" | "⟪" | "⟫"
+    | "⎨" | "⎬" | "⎡"| "⎤" | "⎣" | "⎦"
+    | "“" |  "”"
+  bracketed =
+    | brack<"(", ")"> -- br1
+    | brack<"{", "}"> -- br2
+    | brack<"[", "]"> -- br3
+    | brack<lt, gt> -- br4
+    | brack<"❲", "❳"> -- br5
+    | brack<"⟨", "⟩"> -- br6
+    | brack<"⟪", "⟫"> -- br7
+    | brack<"⎨", "⎬"> -- br8
+    | brack<"⎡", "⎤"> -- br9
+    | brack<"⎣", "⎦"> -- br10
+    | brack<"/*", "*/"> -- br11
+    | brack<"\«", "\»"> -- br12
+    | verbatim -- br13
+
+  verbatim = "“" (~"”" any)* "”"
+
+  brack<lb,rb> = lb item* rb
+  name = bracketedName | classicName
+  bracketedName = "❲" (~"❳" any)+ "❳"
+  classicName = nameFirst nameRest*
+  nameFirst = letter | "_"
+  nameRest = alnum | nameFirst
+
+  lt = ~angleprefix "<" ~anglesuffix
+  gt = ~angleprefix ">" ~anglesuffix
+  angleprefix = "=" | "<" | ">"
+  anglesuffix = "=" | "<" | ">"
+      dq = "\\\\""
+      bslash = "\\\\\\\\"
+      bq = "\\`"
+      sq = "\\'"
+      nl = "\\\\n"
+      escchar = bslash any
+      dqstring = dq (escchar | (~dq any))* dq
+      bqstring = bq (escchar | (~bq any))* bq
+      sqstring = sq (escchar | (~sq any))* sq
+
+      slashslash = "//"
+      sscomment = slashslash (~nl any)* nl
+
+      slashstar = "/*"
+      starslash = "*/"
+      slashstarcomment = slashstar (~starslash any)* starslash
+
+      whitespace = " " | "\\\\t" | "\\\\n"
+
+’
+
+  firstPattern [lq firstitem+ rq] = ‛’
+  firstitem_variable [lq name rq] = ‛’
+  firstitem_dontcare [c] = ‛’
+  firstitem_space [c] = ‛’
+  firstitem_character [c] = ‛’
+  secondPattern [lq seconditem+ rq] = ‛’
+  seconditem_variable [lq name rq] = ‛’
+  seconditem_space [c] = ‛’
+  seconditem_character [c] = ‛’
+
+  name [nameFirst nameRest*] = ‛«nameFirst»«nameRest»’
+  nameFirst [letter] = ‛«letter»’
+  nameRest [alnum] = ‛«alnum»’
+}
+
+

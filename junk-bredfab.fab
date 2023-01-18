@@ -1,0 +1,32 @@
+Bred {
+  main [spaces1 firstPattern spaces2 secondPattern spaces3] = ‛
+Run {
+  top [main+] = \‛\«main\»\’
+  bracket [c] = \‛\«c\»\’
+  char [c] = \‛\«c\»\’
+
+  matchLR_atLeastOneSpace [sp+] = \‛\«sp\»\’
+  matchLR_pattern [lr] = \‛\«lr\»\’
+  matchLR_char [char+] = \‛\«char\»\’
+
+  item [spaces matchLR ] = \‛\«spaces\»\«matchLR\»\’
+  
+  patternLR [lb item1 item2 item3 item4 rb] = ‛⟨MessageWithDebug «ilr1»«ilr2»«ilr3»«ilr4»⟩’
+  «spaces1»«firstPattern»«spaces2»«secondPattern»«spaces3»
+}
+’
+
+  firstPattern [lq firstitem+ rq] = ‛patternLR [«firstitem»] = ’
+  firstitem_variable [lq name rq] = ‛ «name» ’
+  firstitem_space [c] = ‛’
+  firstitem_characters [c+] = ‛ «gensym ("ignore")» ’
+  secondPattern [lq seconditem+ rq] = ‛«lq»«seconditem»«rq»’
+  seconditem_variable [lq name rq] = ‛«lq»«name»«rq»’
+  seconditem_space [s] = ‛’
+  seconditem_characters [c+] = ‛«c»’
+
+  name [nameFirst nameRest*] = ‛«nameFirst»«nameRest»’
+  nameFirst [letter] = ‛«letter»’
+  nameRest [alnum] = ‛«alnum»’
+}
+

@@ -1,0 +1,14 @@
+#def procedure ❲clear outputs❳ {
+  #lang js (self) «
+    self.outputs = [];
+    ⟪𝜌port 𝜌data š 𝜌message⟫
+  »
+}
+#def procedure ❲clear outputs❳ {
+  #lang js (self) “
+    self.outputs = [];
+    ⟪𝜌port 𝜌data š 𝜌message⟫
+  ”
+}
+⟪𝜌port 𝜌data š 𝜌message⟫
+func (x => { console.log ("hello"); });

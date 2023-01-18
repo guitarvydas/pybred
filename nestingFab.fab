@@ -1,0 +1,27 @@
+NestingGrammar {
+
+  topLevel [items+] = ‛«items»’
+  
+  item_pattern [p] = ‛«p»’
+  item_variable [v] = ‛«v»’
+  item_bracketed [b] = ‛«b»’
+  item_spaces [s] = ‛«s»’
+  item_chars [c] = ‛«c»’
+
+  runOfSpaces [s+] = ‛«s»’
+  runOfUninterestingChars [cs+] = ‛«cs»’
+  uninterestingChar [c] = ‛«c»’
+
+  variable [lb name rb] = ‛\««name»\»’
+  bracket [c] = ‛«c»’
+  // bracketed [x] ... handled implicitly by Ohm-JS
+  brack [lb item+ rb] = ‛«item»’
+  name [n] = ‛«n»’
+  bracketedName [lb cs+ rb] = ‛❲«cs»❳’
+  classicName [nFirst nRest*] = ‛«nFirst»«nRest»’
+  nameFirst [c] = ‛«c»’
+  nameRest [c] = ‛«c»’
+
+  pattern [_k1 p _s2 d _s3 s _s4 m _k5 ] = ‛⟨Message «p» «d» «s» «m»⟩’
+  literal [c] = ‛«c»’
+}
