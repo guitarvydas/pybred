@@ -1,0 +1,54 @@
+
+NestingGrammar {
+
+  topLevel [items+] = ‛«items»’
+  
+  item_ws [ws+] = ‛«ws»’
+  item_atom [a] = ‛«a»’
+  item_pattern [p] = ‛«p»’
+  item_bracketed [b] = ‛«b»’
+  item_other [x] = ‛«x»’
+
+  atom [x] = ‛«x»’
+  other [x] = ‛«x»’
+
+  bracket [c] = ‛«c»’
+  bracketed [x] = ‛«x»’
+  brack [lb item+ rb] = ‛«lb»«item»«rb»’
+  verbatim [lq cs* rq] = ‛«lq»«cs»«rq»’
+  name [n] = ‛«n»’
+  bracketedName [lb cs+ rb] = ‛❲«cs»❳’
+  classicName [nFirst nRest*] = ‛«nFirst»«nRest»’
+  nameFirst [c] = ‛«c»’
+  nameRest [c] = ‛«c»’
+
+  lt [c] = ‛«c»’
+  gt [c] = ‛«c»’
+  angleprefix [c] = ‛«c»’
+  anglesuffix [c] = ‛«c»’
+  
+      dq [c] = ‛«c»’
+      bslash [c] = ‛«c»’
+      bq [c] = ‛«c»’
+      sq [c] = ‛«c»’
+      nl [c] = ‛«c»’
+      escchar [bslash c] = ‛«bslash»«c»’
+      dqstring [q1 cs* q2] = ‛«q1»«cs»«q2»’
+      bqstring [q1 cs* q2] = ‛«q1»«cs»«q2»’
+      sqstring [q1 cs* q2] = ‛«q1»«cs»«q2»’
+      slashslash [c] = ‛«c»’
+      sscomment [ss1 cs* ss2] = ‛«ss1»«cs»«ss2»’
+
+      slashstar [x] = ‛«x»’
+      starslash [x] = ‛«x»’
+      sscomment [ss1 cs* ss2] = ‛«ss1»«cs»«ss2»’
+      slashstarcomment [k1 cs* k2] = ‛«k1»«cs»«k2»’
+
+      whitespace [c] = ‛«c»’
+
+  literal [c] = ‛«c»’
+  pattern [name _s1 _k2 params _k3 _s4 _k5 block _k6 ] = ‛
+# «name»
+’
+}
+

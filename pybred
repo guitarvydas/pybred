@@ -28,24 +28,46 @@ spec="""‛«name» («params») {«block»}’
 cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab']
 p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
 generatedOhmPart1 = p.stdout
-generatedOhm = generatedOhmPart1
+
+cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab']
+p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
+generatedOhmPart2 = p.stdout
+
+cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm3.fab']
+p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
+generatedOhmPart3 = p.stdout
+
+
+
+generatedOhm = generatedOhmPart1 + generatedOhmPart2 + generatedOhmPart3
 print ('generatedOhm')
 print (generatedOhm)
 
-# ${bdir}/fab/fab - Bred ${bdir}/bred.ohm ${bdir}/bredohm2.fab           <${spec} >>${fname}.ohm
-# ${bdir}/fab/fab - Bred ${bdir}/bred.ohm ${bdir}/bredohm3.fab           <${spec} >>${fname}.ohm
 # # generate .fab file
-# ${bdir}/fab/fab - Bred ${bdir}/bred.ohm ${bdir}/bredfab.fab ${support} <${spec} >${fname}.fab
+cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab',
+       f'{support}']
+p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
+generatedFab = p.stdout
+
+print ('generated Fab')
+print (generatedFab)
 
 # # apply matcher/replacer to source
 # #${bdir}/bred-apply.bash ${fname} ${bdir}
 # # run the nano-transpiler
 # ${bdir}/fab/fab - NestingGrammar ${fname}.ohm ${fname}.fab
+src6='f (int x) { a = b; }'
+## note: fab requires filenames not text
+ohmFname = fname + '.ohm'
+fabFname = fname + '.fab'
+with open (ohmFname, 'w') as f:
+    f.write (generatedOhm)
+with open (fabFname, 'w') as f:
+    f.write (generatedFab)
+cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}']
+p = subprocess.run (cmd,input=src6,capture_output=True,universal_newlines=True)
+output = p.stdout
 
-# if [ "" = "$keep" ]
-# then   
-#     rm -f ${fname}.ohm ${fname}.fab
-# else
-#     echo kept: ${fname}.ohm ${fname}.fab
-# fi
-
+print ()
+print ('output...')
+print (output)
