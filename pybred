@@ -14,6 +14,8 @@ pid=os.getpid ()
 
 fname='pattern'
 if ('--keep' == keep):
+    pass
+else:
     fname=fname+str(pid)
 
 
@@ -40,8 +42,6 @@ generatedOhmPart3 = p.stdout
 
 
 generatedOhm = generatedOhmPart1 + generatedOhmPart2 + generatedOhmPart3
-print ('generatedOhm')
-print (generatedOhm)
 
 # # generate .fab file
 cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab',
@@ -49,14 +49,12 @@ cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab'
 p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
 generatedFab = p.stdout
 
-print ('generated Fab')
-print (generatedFab)
 
 # # apply matcher/replacer to source
 # #${bdir}/bred-apply.bash ${fname} ${bdir}
 # # run the nano-transpiler
 # ${bdir}/fab/fab - NestingGrammar ${fname}.ohm ${fname}.fab
-src6='f (int x) { a = b; }'
+src6='hard-wired: f (int x) { a = b; }'
 ## note: fab requires filenames not text
 ohmFname = fname + '.ohm'
 fabFname = fname + '.fab'
@@ -64,10 +62,9 @@ with open (ohmFname, 'w') as f:
     f.write (generatedOhm)
 with open (fabFname, 'w') as f:
     f.write (generatedFab)
+with open ('src6.txt', 'r') as f:
+    src = f.read ()
 cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}']
-p = subprocess.run (cmd,input=src6,capture_output=True,universal_newlines=True)
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
 output = p.stdout
-
-print ()
-print ('output...')
 print (output)
