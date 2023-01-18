@@ -1,1 +1,1 @@
-f (int x) { a = b; }
+stdin: f (int x) { a = b; }

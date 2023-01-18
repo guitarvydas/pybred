@@ -62,8 +62,7 @@ with open (ohmFname, 'w') as f:
     f.write (generatedOhm)
 with open (fabFname, 'w') as f:
     f.write (generatedFab)
-with open ('src6.txt', 'r') as f:
-    src = f.read ()
+src = sys.stdin.read ()
 cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}']
 p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
 output = p.stdout
