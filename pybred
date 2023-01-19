@@ -63,7 +63,7 @@ with open (ohmFname, 'w') as f:
 with open (fabFname, 'w') as f:
     f.write (generatedFab)
 src = sys.stdin.read ()
-cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}']
+cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}'] # call JS to parse input
 p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
 output = p.stdout
 print (output)
