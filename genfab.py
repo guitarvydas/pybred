@@ -7,7 +7,7 @@ from leaf import Leaf
 class GenerateFabSpec (Leaf):
     def __handler__ (self, message):
         if ('go' == message.port):
-            bdir = '.'
+            bdir = os.path.realpath ('')
             support=f'{bdir}/support.js'
             cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab', support]
             p = subprocess.run (cmd,input=self.src,capture_output=True,universal_newlines=True)

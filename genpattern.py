@@ -7,9 +7,9 @@ from leaf import Leaf
 class GeneratePattern (Leaf):
     def __handler__ (self, message):
         if ('go' == message.port):
-            bdir = '.'
+            bdir = os.path.realpath ('')
             nullsupport=f'{bdir}/nullsupport.js'
-            cmd = [f'{bdir}/fab/fab', '-', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab', nullsupport]
+            cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab', nullsupport]
             p = subprocess.run (cmd,input=self.src,capture_output=True,universal_newlines=True)
             if ('' != p.stderr):
                 print ('INTERNAL ERROR 2')
