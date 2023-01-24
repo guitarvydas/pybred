@@ -1,8 +1,12 @@
+import subprocess
+import sys
+import os
+
 from leaf import Leaf
 
 class GenerateBoilerPlate (Leaf):
     def __handler__ (self, message):
-        if ('in' == data.port):
+        if ('in' == message.port):
             bdir = '.'
             nullsupport=f'{bdir}/nullsupport.js'
             src = message.data

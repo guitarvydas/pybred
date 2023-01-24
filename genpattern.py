@@ -1,8 +1,12 @@
+import subprocess
+import sys
+import os
+
 from leaf import Leaf
 
 class GeneratePattern (Leaf):
     def __handler__ (self, message):
-        if ('go' == data.port):
+        if ('go' == message.port):
             bdir = '.'
             nullsupport=f'{bdir}/nullsupport.js'
             cmd = [f'{bdir}/fab/fab', '-', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab', nullsupport]
@@ -12,7 +16,7 @@ class GeneratePattern (Leaf):
                 sys.exit (p.stderr)
             self.send (xfrom=self, portname='out', data=p.stdout, cause=message)
             self.send (xfrom=self, portname='next', data=True, cause=message)
-        elif ('in' == data.port):
-            self.src = data.message
+        elif ('in' == message.port):
+            self.src = message.data
         else:
             self.unhandledPort (message)
