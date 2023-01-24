@@ -11,13 +11,10 @@ class GenerateBoilerPlate (Leaf):
             nullsupport=f'{bdir}/nullsupport.js'
             src = message.data
             cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab', nullsupport]
-            print ('BOILERPLATE')
-            print (cmd)
             p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
             if ('' != p.stderr):
                 print ('INTERNAL ERROR 1')
                 sys.exit (p.stderr)
-            print (p.stdout)
             self.send (xfrom=self, portname='out', data=p.stdout, cause=message)
             self.send (xfrom=self, portname='next', data=True, cause=message)
         else:

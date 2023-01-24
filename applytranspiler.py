@@ -18,10 +18,6 @@ class ApplyTranspiler (Leaf):
             ## note: fab requires filenames not text
             ohmFname = fname + '.ohm'
             fabFname = fname + '.fab'
-            print ('Apply')
-            print (f'{ohmFname} {fabFname}')
-            print (self.generatedOhm)
-            print (self.generatedFab)
             with open (ohmFname, 'w') as f:
                 f.write (self.generatedOhm)
             with open (fabFname, 'w') as f:

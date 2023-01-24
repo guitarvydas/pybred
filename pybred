@@ -30,10 +30,10 @@ class PyBred (Container):
       self._children = [gbp, gp, gl, gf, tr]
       self._connections = [
           # input src goes to all sub-components
-          Down (Sender (self,'in'), Receiver (gbp,'in')),
-          Down (Sender (self,'in'), Receiver (gp,'in')),
-          Down (Sender (self,'in'), Receiver (gl,'in')),
-          Down (Sender (self,'in'), Receiver (gf,'in')),
+          Down (Sender (self,'spec'), Receiver (gbp,'in')),
+          Down (Sender (self,'spec'), Receiver (gp,'in')),
+          Down (Sender (self,'spec'), Receiver (gl,'in')),
+          Down (Sender (self,'spec'), Receiver (gf,'in')),
           Down (Sender (self,'in'), Receiver (tr,'in')),
           # batons for executing components in sequence
           Across (Sender (gbp, 'next'), Receiver (gp, 'go')),
@@ -55,11 +55,16 @@ class PyBred (Container):
 
 
 
-src="""‛«name» («params») {«block»}’
+spec="""‛«name» («params») {«block»}’
 ‛
 # «name»
 ’"""
 
+src = """stringlit: f (int x) { a = b; }"""
+
 pybred = PyBred (None, 'pybred')
-pybred.start (port='in', data=src)
+pybred.inject (port='spec', data=spec)
+pybred.inject (port='in', data=src)
+print ('... running ...')
+pybred.run ()
 print (pybred.outputs ())
