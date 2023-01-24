@@ -54,15 +54,15 @@ class PyBred (Container):
 
 
 
-spec="""‛«name» («params») {«block»}’
+static_spec="""‛«name» («params») {«block»}’
 ‛
 «name»
 ’"""
 
-src = """stringlit: f (int x) { a = b; }"""
+static_src = """stringlit: f (int x) { a = b; }"""
 
 pybred = PyBred (None, 'pybred')
-pybred.inject (port='spec', data=spec)
-pybred.inject (port='in', data=src)
+pybred.inject (port='spec', data=static_spec)
+pybred.inject (port='in', data=static_src)
 pybred.run ()
 print (pybred.outputs ())
