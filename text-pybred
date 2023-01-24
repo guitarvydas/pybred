@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+## usage: ./bred.bash message.bred breddir <src
+
+import subprocess
+import sys
+import os
+
+src=sys.argv[1]
+bdir=sys.argv[2]
+
+pid=os.getpid ()
+
+
+fname='pattern' + str(pid)
+
+
+support=f'{bdir}/support.js'
+
+src="""‛«name» («params») {«block»}’
+‛
+# «name»
+’"""
+
+nullsupport=f'{bdir}/nullsupport.js'
+
+cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab', nullsupport]
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
+generatedOhmPart1 = p.stdout
+if ('' != p.stderr):
+    print ('INTERNAL ERROR 1')
+    sys.exit (p.stderr)
+
+cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab', nullsupport]
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
+generatedOhmPart2 = p.stdout
+if ('' != p.stderr):
+    print ('INTERNAL ERROR 2')
+    sys.exit (p.stderr)
+
+cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredohm3.fab', nullsupport]
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
+generatedOhmPart3 = p.stdout
+if ('' != p.stderr):
+    print ('INTERNAL ERROR 3')
+    sys.exit (p.stderr)
+
+
+
+generatedOhm = generatedOhmPart1 + generatedOhmPart2 + generatedOhmPart3
+print ('Generated OHM')
+print ('---')
+print (generatedOhm)
+print ('---')
+
+
+cmd = [f'{bdir}/fab/fab', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab', nullsupport]
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
+generatedFab = p.stdout
+if ('' != p.stderr):
+    print ('INTERNAL ERROR 4')
+    print (cmd)
+    print (p)
+    sys.exit (p.stderr)
+print ('Generated FAB---')
+print (generatedFab)
+print ('---')
+
+# # apply matcher/replacer to source
+# #${bdir}/bred-apply.bash ${fname} ${bdir}
+# # run the nano-transpiler
+# ${bdir}/fab/fab - NestingGrammar ${fname}.ohm ${fname}.fab
+src6='hard-wired: f (int x) { a = b; }'
+## note: fab requires filenames not text
+ohmFname = fname + '.ohm'
+fabFname = fname + '.fab'
+with open (ohmFname, 'w') as f:
+    f.write (generatedOhm)
+with open (fabFname, 'w') as f:
+    f.write (generatedFab)
+src = sys.stdin.read ()
+cmd = [f'{bdir}/fab/fab', '-', f'{ohmFname}', f'{fabFname}', nullsupport] # call JS to parse input
+p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
+if ('' != p.stderr):
+    print ('INTERNAL ERROR 5')
+    sys.exit (p.stderr)
+print ('DONE')
+output = p.stdout
+print (output)

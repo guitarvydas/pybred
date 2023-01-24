@@ -5,65 +5,61 @@ import subprocess
 import sys
 import os
 
-spec=sys.argv[1]
-bdir=sys.argv[2]
-keep=sys.argv[3]
+# 0D
+from sender import Sender
+from receiver import Receiver
+from up import Up
+from down import Down
+from across import Across
+from container import Container
 
-pid=os.getpid ()
+# components
+from genboilerplate import GenerateBoilerPlate
+from genpattern import GeneratePattern
+from genliteral import GenerateLiterals
+from genfab import GenerateFabSpec
+from applytranspiler import ApplyTranspiler
+
+class PyBred (Container):
+  def __init__ (self, parent, name):
+      gbp = GenerateBoilerPlate (self, f'{name}/genboilerplate')
+      gp = GeneratePattern (self, f'{name}/genpattern')
+      gl = GenerateLiterals (self, f'{name}/genliteral')
+      gf = GenerateFabSpec (self, f'{name}/genfab')
+      tr = ApplyTranspiler (self, f'{name}/applytranspiler')
+      self._children = [gbp, gp, gl, gf, tr]
+      self._connections = [
+          # input src goes to all sub-components
+          Down (Sender (self,'in'), Receiver (gbp,'in')),
+          Down (Sender (self,'in'), Receiver (gp,'in')),
+          Down (Sender (self,'in'), Receiver (gl,'in')),
+          Down (Sender (self,'in'), Receiver (gf,'in')),
+          Down (Sender (self,'in'), Receiver (tr,'in')),
+          # batons for executing components in sequence
+          Across (Sender (gbp, 'next'), Receiver (gp, 'go')),
+          Across (Sender (gp, 'next'), Receiver (gl, 'go')),
+          Across (Sender (gl, 'next'), Receiver (gf, 'go')),
+          Across (Sender (gf, 'next'), Receiver (tr, 'go')),
+          # output of each grammar-generating pass is accumulated by apply-er
+          Across (Sender (gbp, 'out'), Receiver (tr, 'ohm')),
+          Across (Sender (gp, 'out'), Receiver (tr, 'ohm')),
+          Across (Sender (gl, 'out'), Receiver (tr, 'ohm')),
+          # output of fab-generating pass feeds 'fab' pin of apply-er
+          Across (Sender (gf, 'out'), Receiver (tr, 'fab')),
+          # output of apply-er is the final output of the whole enchilada
+          Up (Sender (tr, 'out'), Receiver (self, 'out'))
+          ]
+      super ().__init__ (parent, name, self._children, self._connections)
+          
 
 
-fname='pattern'
-if ('--keep' == keep):
-    pass
-else:
-    fname=fname+str(pid)
 
 
-support=f'--support={bdir}/support.js'
-
-spec="""‛«name» («params») {«block»}’
+src="""‛«name» («params») {«block»}’
 ‛
 # «name»
 ’"""
 
-
-cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm1.fab']
-p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
-generatedOhmPart1 = p.stdout
-
-cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm2.fab']
-p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
-generatedOhmPart2 = p.stdout
-
-cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredohm3.fab']
-p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
-generatedOhmPart3 = p.stdout
-
-
-
-generatedOhm = generatedOhmPart1 + generatedOhmPart2 + generatedOhmPart3
-
-# # generate .fab file
-cmd = [f'{bdir}/fab/fab', '-', 'Bred', f'{bdir}/bred.ohm', f'{bdir}/bredfab.fab',
-       f'{support}']
-p = subprocess.run (cmd,input=spec,capture_output=True,universal_newlines=True)
-generatedFab = p.stdout
-
-
-# # apply matcher/replacer to source
-# #${bdir}/bred-apply.bash ${fname} ${bdir}
-# # run the nano-transpiler
-# ${bdir}/fab/fab - NestingGrammar ${fname}.ohm ${fname}.fab
-src6='hard-wired: f (int x) { a = b; }'
-## note: fab requires filenames not text
-ohmFname = fname + '.ohm'
-fabFname = fname + '.fab'
-with open (ohmFname, 'w') as f:
-    f.write (generatedOhm)
-with open (fabFname, 'w') as f:
-    f.write (generatedFab)
-src = sys.stdin.read ()
-cmd = [f'{bdir}/fab/fab', '-', 'NestingGrammar', f'{ohmFname}', f'{fabFname}'] # call JS to parse input
-p = subprocess.run (cmd,input=src,capture_output=True,universal_newlines=True)
-output = p.stdout
-print (output)
+pybred = PyBred (None, 'pybred')
+pybred.start (port='in', data=src)
+print (pybred.outputs ())
