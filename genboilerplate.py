@@ -17,6 +17,7 @@ class GenerateBoilerPlate (Leaf):
             if ('' != p.stderr):
                 print ('INTERNAL ERROR 1')
                 sys.exit (p.stderr)
+            print (p.stdout)
             self.send (xfrom=self, portname='out', data=p.stdout, cause=message)
             self.send (xfrom=self, portname='next', data=True, cause=message)
         else:

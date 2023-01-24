@@ -1,0 +1,2 @@
+#!/bin/bash
+/media/psf/local-projects/pybred/fab/fab /media/psf/local-projects/pybred/bred.ohm /media/psf/local-projects/pybred/bredohm1.fab /media/psf/local-projects/pybred/nullsupport.js </media/psf/local-projects/pybred/src.txt
