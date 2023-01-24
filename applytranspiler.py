@@ -6,7 +6,10 @@ from leaf import Leaf
 
 class ApplyTranspiler (Leaf):
     def __handler__ (self, message):
-        if ('go' == message.port):
+        if ('in' == message.port):
+            self.src = message.data
+            srcHardWired='hard-wired: f (int x) { a = b; }'
+            self.src = srcHardWired
             bdir = os.path.realpath ('')
             nullsupport=f'{bdir}/nullsupport.js'
             fname='pattern'
@@ -14,7 +17,6 @@ class ApplyTranspiler (Leaf):
             # #${bdir}/bred-apply.bash ${fname} ${bdir}
             # # run the nano-transpiler
             # ${bdir}/fab/fab - NestingGrammar ${fname}.ohm ${fname}.fab
-            srcHardWired='hard-wired: f (int x) { a = b; }'
             ## note: fab requires filenames not text
             ohmFname = fname + '.ohm'
             fabFname = fname + '.fab'
@@ -29,8 +31,6 @@ class ApplyTranspiler (Leaf):
                 sys.exit (p.stderr)
             self.send (xfrom=self, portname='out', data=p.stdout, cause=message)
             self.send (xfrom=self, portname='next', data=True, cause=message)
-        elif ('in' == message.port):
-            self.src = message.data
         elif ('ohm' == message.port):
             try:
                 self.generatedOhm = self.generatedOhm + message.data

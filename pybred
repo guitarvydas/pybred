@@ -39,7 +39,6 @@ class PyBred (Container):
           Across (Sender (gbp, 'next'), Receiver (gp, 'go')),
           Across (Sender (gp, 'next'), Receiver (gl, 'go')),
           Across (Sender (gl, 'next'), Receiver (gf, 'go')),
-          Across (Sender (gf, 'next'), Receiver (tr, 'go')),
           # output of each grammar-generating pass is accumulated by apply-er
           Across (Sender (gbp, 'out'), Receiver (tr, 'ohm')),
           Across (Sender (gp, 'out'), Receiver (tr, 'ohm')),
