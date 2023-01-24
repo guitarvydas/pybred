@@ -49,8 +49,11 @@ class PyBred (Container):
           Up (Sender (tr, 'out'), Receiver (self, 'out'))
           ]
       super ().__init__ (parent, name, self._children, self._connections)
-          
 
+def fetchFromFile (filename):
+  with open (filename, 'r') as f:
+    r = f.read ()
+    return r
 
 
 
@@ -61,8 +64,14 @@ static_spec="""‛«name» («params») {«block»}’
 
 static_src = """stringlit: f (int x) { a = b; }"""
 
+# spec = static_spec
+# src = static_src
+
+spec = fetchFromFile ('c.bred')
+src = fetchFromFile ('src.txt')
+
 pybred = PyBred (None, 'pybred')
-pybred.inject (port='spec', data=static_spec)
-pybred.inject (port='in', data=static_src)
+pybred.inject (port='spec', data=spec)
+pybred.inject (port='in', data=src)
 pybred.run ()
 print (pybred.outputs ())

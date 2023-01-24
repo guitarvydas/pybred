@@ -8,8 +8,6 @@ class ApplyTranspiler (Leaf):
     def __handler__ (self, message):
         if ('in' == message.port):
             self.src = message.data
-            srcHardWired='hard-wired: f (int x) { a = b; }'
-            self.src = srcHardWired
             bdir = os.path.realpath ('')
             nullsupport=f'{bdir}/nullsupport.js'
             fname='pattern'
