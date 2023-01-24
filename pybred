@@ -56,7 +56,7 @@ class PyBred (Container):
 
 spec="""‛«name» («params») {«block»}’
 ‛
-# «name»
+«name»
 ’"""
 
 src = """stringlit: f (int x) { a = b; }"""
@@ -64,6 +64,5 @@ src = """stringlit: f (int x) { a = b; }"""
 pybred = PyBred (None, 'pybred')
 pybred.inject (port='spec', data=spec)
 pybred.inject (port='in', data=src)
-print ('... running ...')
 pybred.run ()
 print (pybred.outputs ())

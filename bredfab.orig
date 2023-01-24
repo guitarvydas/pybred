@@ -1,0 +1,5 @@
+  item_ws [ws+] = \‛\«ws\»\’
+  item_atom [a] = \‛\«a\»\’
+  item_pattern [p] = \‛\«p\»\’
+  item_bracketed [b] = \‛\«b\»\’
+  item_other [x] = \‛\«x\»\’

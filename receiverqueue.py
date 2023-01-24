@@ -3,7 +3,7 @@ from fifo import FIFO
 class ReceiverQueue:
     def __init__ (self):
         self._inputq = FIFO ()
-        self._debugHandling = True
+        self._debugHandling = False
         
     def injectMessage (self, message):
         self.enqueueInput (message)
