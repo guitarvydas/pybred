@@ -1,4 +1,4 @@
-all: dev
+all: real
 
 real:
 	./pybred c.bred <src.txt
