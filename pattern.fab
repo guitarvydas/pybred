@@ -1,8 +1,14 @@
 
 NestingGrammar {
 
-  topLevel [items+] = ‛«items»’
+  topLevel [toplevelitems+] = ‛«toplevelitems»’
   
+  toplevelitem_ws [ws+] = ‛’
+  toplevelitem_atom [a] = ‛’
+  toplevelitem_pattern [p] = ‛«p»’
+  toplevelitem_bracketed [b] = ‛’
+  toplevelitem_other [x] = ‛’
+
   item_ws [ws+] = ‛«ws»’
   item_atom [a] = ‛«a»’
   item_pattern [p] = ‛«p»’
@@ -47,7 +53,7 @@ NestingGrammar {
       whitespace [c] = ‛«c»’
 
   literal [c] = ‛«c»’
-  pattern [name _s1 _k2 params _k3 _s4 _k5 block _k6 ] = ‛
+  pattern [name _s1 _k2 params+ _k3 _s4 _k5 block+ _k6 ] = ‛
 hey hey «name» na na
 ’
 }

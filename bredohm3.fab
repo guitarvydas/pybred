@@ -5,12 +5,14 @@ Bred {
   firstPattern [lq firstitem+ rq] = ‛«firstitem»| bracket
 }’
 
-  firstitem_variable [lq name rq] = ‛’
+  firstitem_leafvariable [lq name rq] = ‛’
+  firstitem_containervariable [lq name rq] = ‛’
   firstitem_dontcare [c] = ‛’
   firstitem_space [c] = ‛| " " ’
   firstitem_character [c] = ‛| "«c»" ’
   secondPattern [lq seconditem+ rq] = ‛’
-  seconditem_variable [lq name rq] = ‛’
+  seconditem_leafvariable [lq name rq] = ‛’
+  seconditem_containervariable [lq name rq] = ‛’
   seconditem_space [c] = ‛’
   seconditem_character [c] = ‛’
 

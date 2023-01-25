@@ -6,15 +6,17 @@ Bred {
 
   firstPattern = "‛" firstitem+ "’"
   firstitem =
-    | "«" name "»" -- variable
+    | "⎣" name "⎦" -- leafvariable
+    | "«" name "»" -- containervariable
     | "_" -- dontcare
     | space -- space
-    | (~"«" ~"»" ~"‛" ~"’" ~space any) -- character
+    | (~"«" ~"»" ~"⎣" ~"⎦" ~"‛" ~"’" ~space any) -- character
   secondPattern = "‛" seconditem* "’"
   seconditem =
-    | "«" name "»" -- variable
+    | "⎣" name "⎦" -- leafvariable
+    | "«" name "»" -- containervariable
     | space -- space
-    | (~"«" ~"»" ~"‛" ~"’" ~space any) -- character
+    | (~"«" ~"»" ~"⎣" ~"⎦" ~"‛" ~"’" ~space any) -- character
 
   name = nameFirst nameRest*
   nameFirst = letter

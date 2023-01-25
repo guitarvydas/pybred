@@ -67,7 +67,7 @@ static_src = """stringlit: f (int x) { a = b; }"""
 # spec = static_spec
 # src = static_src
 
-spec = fetchFromFile ('c.bred')
+spec = fetchFromFile ('c2.bred')
 src = fetchFromFile ('src.txt')
 
 pybred = PyBred (None, 'pybred')
