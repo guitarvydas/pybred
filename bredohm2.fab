@@ -4,7 +4,7 @@ Bred {
 
   firstPattern [lq firstitem+ rq] = ‛«firstitem»’
 
-  firstitem_leafvariable [lq name rq] = ‛item ’
+  firstitem_leafvariable [lq name rq] = ‛other ’
   firstitem_containervariable [lq name rq] = ‛item+ ’
   firstitem_dontcare [c] = ‛dontcare ’
   firstitem_space [c] = ‛whitespace+ ’
