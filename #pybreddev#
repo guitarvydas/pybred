@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+## usage: ./bred.bash message.bred breddir <src
+
+import subprocess
+import sys
+import os
+
+# 0D
+from sender import Sender
+from receiver import Receiver
+from up import Up
+from down import Down
+from across import Across
+from container import Container
+
+# components
+from verbatimpatterns import VerbatimPatterns
+from applytranspiler import ApplyTranspiler
+
+class PyBredDev (Container):
+  def __init__ (self, parent, name):
+      vp = VerbatimPatterns (self, f'{name}/verbatimpatterns')
+      tr = ApplyTranspiler (self, f'{name}/applytranspiler')
+      self._children = [vp, tr]
+      self._connections = [
+          Down (Sender (self,'spec'), Receiver (vp,'in')),
+          Down (Sender (self,'in'), Receiver (tr,'in')),
+
+          Across (Sender (vp, 'ohm'), Receiver (tr, 'ohm')),
+          Across (Sender (vp, 'fab'), Receiver (tr, 'fab')),
+        
+          # output of apply-er is the final output of the whole enchilada
+          Up (Sender (tr, 'out'), Receiver (self, 'out'))
+          ]
+      super ().__init__ (parent, name, self._children, self._connections)
+
+def fetchFromFile (filename):
+  with open (filename, 'r') as f:
+    r = f.read ()
+    return r
+
+spec = fetchFromFile ('c2.bred')
+src = fetchFromFile ('src.txt')
+
+pybreddev = PyBredDev (None, 'pybreddev')
+pybreddev.inject (port='spec', data=spec)
+pybreddev.inject (port='in', data=src)
+pybreddev.run ()
+print (pybreddev.outputs ())

@@ -1,5 +1,8 @@
 all: dev
 
+real:
+	./pybred c.bred <src.txt
+
 dev:
 	./pybreddev c.bred <src.txt
 
