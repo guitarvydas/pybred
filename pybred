@@ -57,16 +57,6 @@ def fetchFromFile (filename):
 
 
 
-static_spec="""‛«name» («params») {«block»}’
-‛
-«name»
-’"""
-
-static_src = """stringlit: f (int x) { a = b; }"""
-
-# spec = static_spec
-# src = static_src
-
 spec = fetchFromFile ('c.bred')
 src = fetchFromFile ('src.txt')
 

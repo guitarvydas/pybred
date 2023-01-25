@@ -1,7 +1,10 @@
-all: dev
+all: real
+
+real:
+	./pybred c.bred <src.txt
 
 dev:
-	./pybred c.bred <src.txt
+	./pybreddev c.bred <src.txt
 
 install: repos npmstuff
 
