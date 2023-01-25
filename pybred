@@ -58,10 +58,15 @@ def fetchFromFile (filename):
 
 
 spec = fetchFromFile ('c.bred')
-src = fetchFromFile ('src.txt')
+src = sys.stdin.read ()
 
 pybred = PyBred (None, 'pybred')
 pybred.inject (port='spec', data=spec)
 pybred.inject (port='in', data=src)
 pybred.run ()
-print (pybred.outputs ())
+r = (pybred.outputs () ['out']) [0]
+print (r)
+l = r.splitlines ()
+print (l)
+print (len (l))
+

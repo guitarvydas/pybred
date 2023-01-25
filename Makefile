@@ -1,6 +1,9 @@
 all: real
 
 real:
+	./pybred c.bred <grep.c
+
+small:
 	./pybred c.bred <src.txt
 
 dev:

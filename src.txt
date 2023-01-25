@@ -1,1 +1,2 @@
 stdin: f (int x) { a = b; }
+g (int y) { c = y; }

@@ -27,7 +27,7 @@ class ApplyTranspiler (Leaf):
             if ('' != p.stderr):
                 print ('INTERNAL ERROR 5')
                 sys.exit (p.stderr)
-            s = p.stdout.rstrip ()
+            s = p.stdout [:-1]
             self.send (xfrom=self, portname='out', data=s, cause=message)
             self.send (xfrom=self, portname='next', data=True, cause=message)
         elif ('ohm' == message.port):
