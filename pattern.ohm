@@ -82,6 +82,6 @@ NestingGrammar {
       whitespace = " " | "\t" | "\n"
 
 
-  pattern = other whitespace+ "(" item+ ")" whitespace+ "{" item+ "}" 
-  literal = | " " | "(" | ")" | " " | "{" | "}" | bracket
+  pattern = "f" "m" "t" "." "P" "r" "i" "n" "t" "l" "n" whitespace+ "(" item+ ")" 
+  literal = | "f" | "m" | "t" | "." | "P" | "r" | "i" | "n" | "t" | "l" | "n" | " " | "(" | ")" | bracket
 }

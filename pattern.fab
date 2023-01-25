@@ -53,6 +53,6 @@ NestingGrammar {
       whitespace [c] = ‛«c»’
 
   literal [c] = ‛«c»’
-  pattern [name _s1 _k2 params+ _k3 _s4 _k5 block+ _k6 ] = ‛«name»\n’
+  pattern [_k1 _k2 _k3 _k4 _k5 _k6 _k7 _k8 _k9 _k10 _k11 _s12 _k13 args+ _k14 ] = ‛fmt.Println(fmt.Sprintf("comby says %s", «args»)’
 }
 

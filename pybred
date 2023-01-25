@@ -57,7 +57,7 @@ def fetchFromFile (filename):
 
 
 
-spec = fetchFromFile ('c.bred')
+spec = fetchFromFile (sys.argv [1])
 src = sys.stdin.read ()
 
 pybred = PyBred (None, 'pybred')

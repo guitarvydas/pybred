@@ -9,6 +9,9 @@ small:
 dev:
 	./pybreddev c.bred <src.txt
 
+comby1:
+	./pybred comby1.bred <main.go
+
 install: repos npmstuff
 
 repos:
