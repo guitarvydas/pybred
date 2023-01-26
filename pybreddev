@@ -39,11 +39,12 @@ def fetchFromFile (filename):
     r = f.read ()
     return r
 
-spec = fetchFromFile ('c2.bred')
-src = fetchFromFile ('src.txt')
+spec = fetchFromFile (sys.argv [1])
+src = sys.stdin.read ()
 
-pybreddev = PyBredDev (None, 'pybreddev')
-pybreddev.inject (port='spec', data=spec)
-pybreddev.inject (port='in', data=src)
-pybreddev.run ()
-print (pybreddev.outputs ())
+pybred = PyBredDev (None, 'pybred')
+pybred.inject (port='spec', data=spec)
+pybred.inject (port='in', data=src)
+pybred.run ()
+r = (pybred.outputs () ['out']) [0]
+print (r)

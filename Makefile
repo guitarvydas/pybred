@@ -6,11 +6,14 @@ real:
 small:
 	./pybred c.bred <src.txt
 
-dev:
+cdev:
 	./pybreddev c.bred <src.txt
 
 comby1:
 	./pybred comby1.bred <main.go
+
+devcomby1:
+	./pybreddev comby1.bred <main.go
 
 install: repos npmstuff
 
