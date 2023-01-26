@@ -1,16 +1,13 @@
 all: real
 
 real:
-	./pybred c.bred <grep.c
+	./pybrex c.bred <grep.c
 
 small:
-	./pybred c.bred <src.txt
+	./pybrex c.bred <src.txt
 
 dev:
-	./pybreddev c.bred <src.txt
-
-comby1:
-	./pybred comby1.bred <main.go
+	./pybrexdev c.bred <src.txt
 
 install: repos npmstuff
 
