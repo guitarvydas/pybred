@@ -2,12 +2,12 @@
 NestingGrammar {
 
   topLevel [toplevelitems+] = ‛«toplevelitems»’
-  
-  toplevelitem_ws [ws+] = ‛’
-  toplevelitem_atom [a] = ‛’
+
+  toplevelitem_ws [ws+] = ‛«ws»’
+  toplevelitem_atom [a] = ‛«a»’
   toplevelitem_pattern [p] = ‛«p»’
-  toplevelitem_bracketed [b] = ‛’
-  toplevelitem_other [x] = ‛’
+  toplevelitem_bracketed [b] = ‛«b»’
+  toplevelitem_other [x] = ‛«x»’
 
   item_ws [ws+] = ‛«ws»’
   item_atom [a] = ‛«a»’
