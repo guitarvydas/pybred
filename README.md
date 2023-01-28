@@ -1,5 +1,4 @@
 # BRED - Text manipulation based on matching brackets
-![bred](./doc/bred.png)
 
 BRED is a tool that helps in re-formatting text.
 
@@ -7,9 +6,9 @@ BRED captures bits of text and allows users to fabricate new text based on the c
 
 See doc/documentation.md for further details.
 
-# Test notes:
+# Test notes:![[README 2023-01-26 08.34.16.excalidraw]]
 
-- parses out function names in grep.c
+- parses out function names in g![[2023-01-26 08.23.53.excalidraw]]rep.c
   - repeats clear_asan_poison and ason_poison (no surprise)
 ```
 #else
