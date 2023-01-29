@@ -65,7 +65,6 @@ pybred.inject (port='spec', data=spec)
 pybred.inject (port='in', data=src)
 pybred.run ()
 r = (pybred.outputs () ['out']) [0]
-print (r)
 l = r.splitlines ()
 print (l)
 print (len (l))

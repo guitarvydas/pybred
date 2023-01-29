@@ -1,6 +1,6 @@
-all: real
+all: grep
 
-real:
+grep:
 	./pybrex c.bred <grep.c
 
 small:
